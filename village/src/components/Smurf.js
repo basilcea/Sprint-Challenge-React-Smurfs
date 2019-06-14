@@ -1,11 +1,13 @@
 import React from 'react';
+import {Link,NavLink} from 'react-router-dom';
+
 
 const Smurf = props => {
   return (
     <div className="Smurf">
-      <h3>{props.name}</h3>
+      <Link to={`/smurfs/${props.id}`}><h3>{props.name}</h3></Link>
       <strong>{props.height} tall</strong>
-      <p>{props.age} smurf years old</p>
+  <p>{props.age} smurf years old</p> 
     </div>
   );
 };

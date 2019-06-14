@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {NavLink} from 'react-router-dom';
 
 import Smurf from './Smurf';
 
 class Smurfs extends Component {
+
   render() {
     return (
       <div className="Smurfs">
@@ -10,6 +12,7 @@ class Smurfs extends Component {
         <ul>
           {this.props.smurfs.map(smurf => {
             return (
+              <div key={smurf.id}>
               <Smurf
                 name={smurf.name}
                 id={smurf.id}
@@ -17,6 +20,9 @@ class Smurfs extends Component {
                 height={smurf.height}
                 key={smurf.id}
               />
+              <NavLink to={`/smurfs/${smurf.id}/update`}>Update</NavLink>
+              <button onClick={() => this.props.deleteSmurf(smurf.id)}>Delete</button>
+              </div>
             );
           })}
         </ul>
