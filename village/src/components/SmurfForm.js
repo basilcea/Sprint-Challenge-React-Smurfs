@@ -12,7 +12,9 @@ class SmurfForm extends Component {
       value: 'Add to the Village',
       placeName:'Name',
       placeAge:'Age',
-      placeHeight:'Height'
+      placeHeight:'Height',
+      target: '',
+      submit:this.addSmurf
     };
   }
 
@@ -50,13 +52,16 @@ class SmurfForm extends Component {
       }
     };
     getSmurfDetails = async(id) => {
+      await this.props.getSmurfs()
       const newSmurf = this.props.smurfs.find(smurf => smurf.id === Number(id))
+      console.log(newSmurf)
       this.setState({
-          name: newSmurf.name,
-          age: newSmurf.age,
-          email:newSmurf.email,
+          placeName: newSmurf.name,
+          placeAge: newSmurf.age,
+          placeHeight:newSmurf.height,
           value: "Update Smurf",
           target: id,
+          submit:this.updateSmurf
       })
     }
 
@@ -65,7 +70,8 @@ class SmurfForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
   componentDidMount(){
-    if(this.props.location.pathname === `/${this.props.match.params.id}/update`) {
+    
+    if(this.props.location.pathname === `/smurfs/${this.props.match.params.id}/update`) {
       this.getSmurfDetails(this.props.match.params.id)
   } 
   }
@@ -73,7 +79,7 @@ class SmurfForm extends Component {
   render() {
     return (
       <div className="SmurfForm">
-        <form onSubmit={this.addSmurf}>
+        <form onSubmit={(e) =>this.state.submit(e, this.state.target)}>
           <input
             onChange={this.handleInputChange}
             placeholder={this.state.placeName}
