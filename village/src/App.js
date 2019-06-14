@@ -4,7 +4,7 @@ import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
 import {Route, NavLink} from 'react-router-dom';
-import Smurf from './components/Smurf';
+import SmurfCard from './components/SmurfCard';
 
 class App extends Component {
   constructor(props) {
@@ -96,9 +96,9 @@ class App extends Component {
       exact
       path="/smurfs/:id"
       render={props => (
-        <Smurf
+        <SmurfCard
           smurfs={this.state.smurfs}
-          getSmurfs={this.getFriends}
+          getSmurfs={this.getSmurfs}
           update={this.updateSmurf}
           delete={this.deleteSmurf}
           {...props}
