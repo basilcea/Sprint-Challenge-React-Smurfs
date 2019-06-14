@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link,NavLink} from 'react-router-dom';
 
 export default class Friend extends React.Component {
     constructor(props){
@@ -20,7 +20,7 @@ export default class Friend extends React.Component {
         })
         }
     
-    deleteFriend =(id) =>{
+    deleteSmurf =(id) =>{
         this.props.delete(id)
         // eslint-disable-next-line no-restricted-globals
         this.props.history.push({pathname:'/'
@@ -34,6 +34,8 @@ export default class Friend extends React.Component {
            <h3>{this.state.smurf.name}</h3>
               <strong>{this.state.smurf.height} tall</strong>
           <p>{this.state.smurf.age} smurf years old</p> 
+          <NavLink to={`/smurfs/${this.state.smurf.id}/update`}>Update</NavLink>
+            <button onClick={() => this.deleteSmurf(this.state.smurf.id)}>Delete</button>
             </div>
           );
         };
