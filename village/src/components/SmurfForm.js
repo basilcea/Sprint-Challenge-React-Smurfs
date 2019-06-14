@@ -44,7 +44,9 @@ class SmurfForm extends Component {
             height: this.state.height
           }
         );
-        return this.props.getSmurfs();
+
+        await this.props.getSmurfs();
+        this.props.history.push({pathname:`/smurfs/${id}`})
       } catch (err) {
         this.setState({
           error: err.message
@@ -54,7 +56,6 @@ class SmurfForm extends Component {
     getSmurfDetails = async(id) => {
       await this.props.getSmurfs()
       const newSmurf = this.props.smurfs.find(smurf => smurf.id === Number(id))
-      console.log(newSmurf)
       this.setState({
           placeName: newSmurf.name,
           placeAge: newSmurf.age,

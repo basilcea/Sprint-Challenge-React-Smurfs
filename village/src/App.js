@@ -4,6 +4,7 @@ import './App.css';
 import SmurfForm from './components/SmurfForm';
 import Smurfs from './components/Smurfs';
 import {Route, NavLink} from 'react-router-dom';
+import Smurf from './components/Smurf';
 
 class App extends Component {
   constructor(props) {
@@ -23,10 +24,31 @@ class App extends Component {
       });
     }
   }
+  updateSmurf = async(e, id) => {
+    e.preventDefault()
+    try {
+      await axios.put(
+        `http://localhost:3333/smurfs/${id}`,
+        {
+          name: this.state.name,
+          age: this.state.age,
+          height: this.state.height
+        }
+      );
+
+      await this.props.getSmurfs();
+      this.props.history.push({pathname:`/smurfs/${id}`})
+    } catch (err) {
+      this.setState({
+        error: err.message
+      });
+    }
+  };
   deleteSmurf = async id => {
     try {
       await axios.delete(`http://localhost:3333/smurfs/${id}`);
-      return this.getSmurfs();
+      await this.getSmurfs();
+      this.props.history.push({pathname:'/'})
     } catch (err) {
       this.setState({
         error: err.message
@@ -70,7 +92,19 @@ class App extends Component {
           />
         )}
       />
-        
+      <Route
+      exact
+      path="/smurfs/:id"
+      render={props => (
+        <Smurf
+          smurfs={this.state.smurfs}
+          getSmurfs={this.getFriends}
+          update={this.updateSmurf}
+          delete={this.deleteSmurf}
+          {...props}
+        />
+      )}
+    />
        
       </div>
     );
